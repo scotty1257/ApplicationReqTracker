@@ -1,0 +1,27 @@
+
+
+.container {
+  width: 150;
+  height: 60px;
+  border: 1px solid #006400;
+  border-radius: 10px;
+}
+
+.body-container {
+  display: flex;
+  margin: auto;
+  border: 1px solid red;
+  padding: 20px;
+  pargin: 20px;
+  height: 100%;
+}
+#element2 {
+  background-color: lightblue;
+  left: 400px;
+  margin-left: 100px;
+}
+#element1 {
+  background-color: ivory; 
+  left: 400px;
+  margin-left: 100px;
+}
