@@ -55,6 +55,70 @@ const findShortestPathToNode = function(start: GraphNode, target: GraphNode) : G
   return [];
 }
 
+class BasicNode {
+  children: BasicNode[];
+  parents: BasicNode[];
+  siblings: BasicNode[];
+
+  /*
+   
+      Basic Tree Visualization
+            Parent (Root)
+         _________|________
+        /         |        \
+     Sibling      Me      Sibling 
+             _____|______    
+            /     |      \
+        Child   Child   Child
+         ...     ...      ...
+
+   */
+}
+
+
+class BasicTree {
+  root: GraphNode;
+  constructor(root: GraphNode) {
+    this.root = root;
+  }
+
+
+}
+
+const DrawNodeLeader(parent: BasicNode, child: BasicNode) {
+  if (parent != null && child != null) {
+    let leader = new LeaderLine(parent, child, {color: 'CornflowerBlue', size: 2});
+  }
+}
+
+const DrawGraphLeaders = function (root: BasicNode, allLeaders?: boolean) : boolean {
+
+
+  // Traverse the Graph
+  //
+  // Give leader to child from parents
+  //
+  let currentChilden = root.children;
+  let currentParents = [root];
+
+  for (let parent : parents) {
+    for (let child : children) {
+    DrawNodeLeader(child, parent);
+    }
+  } 
+
+
+
+
+
+
+  while (currentChildren.length != 0) {
+    for (const child : currentChildren) {
+      DrawNodeLeader(currentParent, child);
+    }
+    currentParent
+  }
+}
 
 
 
