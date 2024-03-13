@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "leader-line": "^1.0.7",
+    "leader-line-new": "^1.1.9",
     "parcel": "^2.12.0"
   }
 }
