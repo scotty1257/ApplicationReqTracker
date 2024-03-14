@@ -1,149 +1,125 @@
-//
-// class GraphNode {
-//   value: any;
-//   neighbors: GraphNode[];
-//
-//   constructor(value: any) {
-//     this.value = value;
-//     this.neighbors = [];
-//   }
-//
-//   addNeighbor(node: GraphNode) {
-//     this.neighbors.push(node);
-//   }
-// }
-//
-//
-// class Graph {
-//   nodes: GraphNode[];
-//
-//   constructor() {
-//     this.nodes = [];
-//   }
-//
-//   addNode(value: any) {
-//     const node = new GraphNode(value);
-//     this.nodes.push(node);
-//   }
-//
-//   addEdge(source: GraphNode, destination: GraphNode) {
-//     source.addNeighbor(destination);
-//     destination.addNeighbor(source);
-//   }
-// }
-//
-// const findShortestPathToNode = function(start: GraphNode, target: GraphNode) : GraphNode[] {
-//   const visited: Set<GraphNode> = new Set();
-//   const queue: [GraphNode, GraphNode[]][] = [];
-//
-//   queue.push([start, [start]]);
-//
-//   while (queue.length > 0) {
-//     const [currentNode, currentPath] = queue.shift()!;
-//
-//     if (currentNode === target) {
-//       return currentPath;
-//     }
-//
-//     visited.add(currentNode);
-//     for (const neighbor of currentNode.neighbors) {
-//       if (!visited.has(neighbor)) {
-//         queue.push([neighbor, [...currentPath, neighbor]]);
-//       }
-//     }
-//   }
-//   return [];
-// }
-//
+import * as LeaderLine from "leader-line-new";
+
+/*   Basic Tree Visualization
+          Parent (Root)
+        _________|________
+      /         |        \
+    Sibling      Me      Sibling
+            _____|______
+          /     |      \
+      Child   Child   Child
+        ...     ...      ...   */
+
 class BasicNode {
-  children: BasicNode[];
-  parents: BasicNode[];
-  siblings: BasicNode[];
+    children: BasicNode[] = [];
+    parents: BasicNode[] = [];
+    siblings: BasicNode[] = [];
+    id: number = 0;
+    owner: BasicTree;
+    content: any = {};
+    GetID(): number {
+        if (this.id !== undefined) 
+          return this.id;
+        
+        let list = this.owner.nodeIdList;
+        let listLen = this.owner.nodeIdList.length - 1;
+        return list[listLen];
+    }
 
-  /*
+    GenerateID(): void {
+        let idList = this.owner.nodeIdList;
+        let idListLen = idList.length-1;
 
-      Basic Tree Visualization
-            Parent (Root)
-         _________|________
-        /         |        \
-     Sibling      Me      Sibling
-             _____|______
-            /     |      \
-        Child   Child   Child
-         ...     ...      ...
-
-   */
+        idList.push(idList[idListLen] + 1);
+    }
 }
-
-import LeaderLine from "leader-line-new";
 
 class BasicTree {
-  root: BasicNode;
-  constructor(root: BasicNode) {
-    this.root = root;
-  }
-}
+    root: BasicNode;
+    nodeIdList: number[];
+    constructor(root: BasicNode) {
+        this.root = root;
+        this.nodeIdList = [];
+    }
+    AddNode(content: any) {
+        let container = document.getElementsByClassName('body-container')[0];
+        let cNode = document.createElement('div');
+        cNode.append(content);
+        cNode.classList.add('container')
+        container.append(cNode);
+
+        let treeNode = new BasicNode();
+
+        treeNode.owner = this;
+        treeNode.GenerateID();
+        cNode.classList.add('element' + treeNode.GetID());
+    }
+};
 
 const DrawNodeLeader = function (parent: BasicNode, child: BasicNode) {
-  if (parent != null && child != null) {
-    let leader = new LeaderLine(parent, child, {
-      color: "CornflowerBlue",
-      size: 2,
-    });
-  }
-};
-
-const DrawGraphLeaders = function (
-  root: BasicNode,
-  allLeaders?: boolean,
-): boolean {
-  let currentChildren = root.children;
-  let currentParents = [root];
-
-  if (!allLeaders) return false;
-
-  for (let parent of currentParents) {
-    for (let child of currentChildren) {
-      DrawNodeLeader(parent, child);
+    if (parent != null && child != null) {
+        let leader = new LeaderLine(parent, child, {
+            color: "CornflowerBlue",
+            size: 2,
+        });
     }
-  }
-  return true;
 };
 
-const AddNewNode = function () {
-  let container = document.getElementsByClassName("body-container")[0];
+const DrawGraphLeaders = function (root: BasicNode): boolean {
+    let currentChildren = root.children;
+    let currentParents = [root];
+
+    for (let parent of currentParents) {
+        for (let child of currentChildren) {
+            DrawNodeLeader(parent, child);
+        }
+    }
+    return true;
 };
 
-const addNode = function (
-  parent: BasicNode,
-  child: BasicNode,
-  content: Node,
-): void {
-  let rootContainer = document.getElementsByClassName("body-container")[0];
+let Main = function() {
+    let root = new BasicNode();
+    let tree = new BasicTree(root);
+    let tempNode = document.createElement('p');
+    tempNode.innerHTML = `<p>Hey There</p>`;
+    tree.AddNode(tempNode);
+}
 
-  let newNode = document.createElement("div");
-  if (content != null || content != undefined) {
-    newNode.appendChild(content);
-  }
 
-  newNode.classList.add("container");
-  // TODO: Need to create UUID for each new container node
-  newNode.id = "element3";
+document.getElementById('addNode')?.addEventListener('click', (event: any) => {
+  Main();
+});
 
-  rootContainer.append(newNode);
-
-  if (parent !== undefined || parent != null) {
-    createLine(parent, newNode);
-  }
-
-  if (child !== undefined && child !== null) {
-    createLine(newNode, child);
-  }
-};
-
-const addDefaultNode = function () {
-  addNode(
-    document.getElementById("element2"),
-    document.getElementById("element3"),
-  );
-};
+// const addNode = function (
+//   parent: BasicNode,
+//   child: BasicNode,
+//   content: Node,
+// ): void {
+//   let rootContainer = document.getElementsByClassName("body-container")[0];
+//
+//   let newNode = document.createElement("div");
+//   if (content != null || content != undefined) {
+//     newNode.appendChild(content);
+//   }
+//
+//   newNode.classList.add("container");
+//   // TODO: Need to create UUID for each new container node
+//   newNode.id = "element3";
+//
+//   rootContainer.append(newNode);
+//
+//   if (parent !== undefined || parent != null) {
+//     createLine(parent, newNode);
+//   }
+//
+//   if (child !== undefined && child !== null) {
+//     createLine(newNode, child);
+//   }
+// };
+//
+// const addDefaultNode = function () {
+//   addNode(
+//     document.getElementById("element2"),
+//     document.getElementById("element3"),
+//   );
+// };
