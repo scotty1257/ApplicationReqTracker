@@ -32,6 +32,13 @@ class BasicNode {
 
         idList.push(idList[idListLen] + 1);
     }
+
+    AddChild(childNode: BasicNode, parentNode: BasicNode) {
+        this.children.push(childNode);
+        childNode.GenerateID();
+
+        return childNode;
+    }
 }
 
 class BasicTree {
@@ -54,6 +61,32 @@ class BasicTree {
         treeNode.GenerateID();
         cNode.classList.add('element' + treeNode.GetID());
     }
+
+  // PrintTree() {
+  //   let currentParents: BasicNode[] = [this.root];
+  //   let currentChildren: BasicNode[] = currentParents[0].children;
+  //
+  //   for (let parent of currentParents) {
+  //     console.log(parent.id);
+  //     for (let child of currentChildren) {
+  //       console.log("    "+child.id);
+  //     }
+  //     currentParents = 
+  //   }
+  //
+  // }
+  //
+  TraverseRecursive(currentNode: BasicNode) {
+    console.log(currentNode.GetID())
+
+    for (let child in currentNode.children) {
+      this.TraverseRecursive(currentNode.children[child]);
+    }
+  }
+
+  Traverse(rootNode: BasicNode) {
+    this.TraverseRecursive(rootNode);
+  }
 };
 
 const DrawNodeLeader = function (parent: BasicNode, child: BasicNode) {
@@ -83,7 +116,19 @@ let Main = function() {
     let tempNode = document.createElement('p');
     tempNode.innerHTML = `<p>Hey There</p>`;
     tree.AddNode(tempNode);
+    root.owner = tree;
+
+
+
+    // tree.AddNode(new BasicNode());
+   let child2 =  root.AddChild(new BasicNode(), root);
+    let child3 = root.AddChild(new BasicNode(), root);
+  tree.Traverse(root);
 }
+
+
+
+
 
 
 document.getElementById('addNode')?.addEventListener('click', (event: any) => {

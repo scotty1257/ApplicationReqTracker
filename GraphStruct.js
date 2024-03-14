@@ -31,6 +31,10 @@ var BasicNode = /** @class */ (function () {
         var idListLen = idList.length - 1;
         idList.push(idList[idListLen] + 1);
     };
+    BasicNode.prototype.AddChild = function (childNode) {
+        this.children.push(childNode);
+        childNode.GenerateID();
+    };
     return BasicNode;
 }());
 var BasicTree = /** @class */ (function () {
@@ -42,11 +46,35 @@ var BasicTree = /** @class */ (function () {
         var container = document.getElementsByClassName('body-container')[0];
         var cNode = document.createElement('div');
         cNode.append(content);
+        cNode.classList.add('container');
         container.append(cNode);
         var treeNode = new BasicNode();
         treeNode.owner = this;
         treeNode.GenerateID();
         cNode.classList.add('element' + treeNode.GetID());
+    };
+    // PrintTree() {
+    //   let currentParents: BasicNode[] = [this.root];
+    //   let currentChildren: BasicNode[] = currentParents[0].children;
+    //
+    //   for (let parent of currentParents) {
+    //     console.log(parent.id);
+    //     for (let child of currentChildren) {
+    //       console.log("    "+child.id);
+    //     }
+    //     currentParents = 
+    //   }
+    //
+    // }
+    //
+    BasicTree.prototype.TraverseRecursive = function (currentNode) {
+        console.log(currentNode.GetID());
+        for (var child in currentNode.children) {
+            this.TraverseRecursive(currentNode.children[child]);
+        }
+    };
+    BasicTree.prototype.Traverse = function (rootNode) {
+        this.TraverseRecursive(rootNode);
     };
     return BasicTree;
 }());
@@ -74,8 +102,10 @@ var DrawGraphLeaders = function (root) {
 var Main = function () {
     var root = new BasicNode();
     var tree = new BasicTree(root);
-    var tempNode = {};
+    var tempNode = document.createElement('p');
+    tempNode.innerHTML = "<p>Hey There</p>";
     tree.AddNode(tempNode);
+    tree.AddNode(new BasicNode());
 };
 (_a = document.getElementById('addNode')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', function (event) {
     Main();
