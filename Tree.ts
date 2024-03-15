@@ -78,6 +78,17 @@ class Tree {
     return undefined;
   }
 
+  getDepthOfNode(node: TreeNode) : number {
+    let depth: number = 0;
+    for (let childNode of this.preOrderTraversal()) {
+      if (childNode.key === node.key) {
+        return depth;
+      }
+      depth++;
+    }
+    return depth;
+  }
+
   print() {
     for (let node of this.postOrderTraversal()) {
       if (node.hasChildren)
@@ -100,6 +111,8 @@ const main = function() {
   tree.insert(3, 8, "H");
   tree.insert(3, 9, "I");
   tree.insert(3, 10, "J");
+
+  tree.getDepthOfNode(10)
   tree.print();
 }
 

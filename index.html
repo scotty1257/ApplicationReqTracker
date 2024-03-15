@@ -4,16 +4,66 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link href='https://unpkg.com/css.gg@2.0.0/icons/css/math-plus.css' rel='stylesheet'>
     <title>xDrawing Requirements</title>
     <script src="GraphStruct.ts" type="module"></script>
   </head>
   <body>
-
-    <div class="body-container">
-      <div class="add-node-button">
+    <div id="bg"></div>
+      <div class="body-container">
+        <!-- <div class="container" id="nodea"><p>Something A</p></div>
+        <div class="container" id="nodeb"><p>Something A-A</p></div>
+        <div class="container" id="nodec"><p>Something A-B</p></div> -->
+        <div href="#" id="nodea" class="node root">Root</div>
+        <div href="#" id="nodeb" class="node parent1">Parent 1</div>
+        <div href="#" id="nodec" class="node parent2">Parent 2</div>
+        <div href="#" id="noded" class="node child1">Child 1</div>
+        <div href="#" id="nodee" class="node child2">Child 2</div>
+        <div id="add1" class="add add1"><i class="gg-math-plus"></i></div>
+        <div id="add2" class="add add2"><i class="gg-math-plus"></i></div>
+        <div id="add3" class="add add3"><i class="gg-math-plus"></i></div>
+        <!-- <div class="add-node-button">
         <button id="addNode">+</button>
+        </div> -->
       </div>
-    </div>
     
+    <script type="module">
+      import * as LeaderLine from "leader-line-new";
+      let a = document.getElementById('nodea');
+      let b = document.getElementById('nodeb');
+      let c = document.getElementById('nodec');
+      let d = document.getElementById('noded');
+      let e = document.getElementById('nodee');
+      let add1 = document.getElementById('add1');
+      let add2 = document.getElementById('add2');
+      let add3 = document.getElementById('add2');
+
+      let leadera = new LeaderLine(a, b,{
+            color: "CornflowerBlue",
+            size: 2,
+        });
+      let leaderb = new LeaderLine(a, c,{
+            color: "CornflowerBlue",
+            size: 2,
+        });
+      let leaderc = new LeaderLine(c, d,{
+          color: "CornflowerBlue",
+          size: 2,
+      });
+
+      let leaderadd1 = new LeaderLine(c, e,{
+          color: "CornflowerBlue",
+          size: 2,
+      });
+      let leaderadd2 = new LeaderLine(c, e,{
+          color: "CornflowerBlue",
+          size: 2,
+      });
+      let leaderadd3 = new LeaderLine(c, e,{
+          color: "CornflowerBlue",
+          size: 2,
+      });
+
+    </script>
   </body>
 </html>
