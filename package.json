@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "graphology": "^0.25.4",
+    "graphology-types": "^0.24.7",
     "leader-line": "^1.0.7",
     "leader-line-new": "^1.1.9",
     "parcel": "^2.12.0"

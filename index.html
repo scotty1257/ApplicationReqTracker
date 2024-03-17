@@ -11,10 +11,7 @@
   <body>
     <div id="bg"></div>
       <div class="body-container">
-        <!-- <div class="container" id="nodea"><p>Something A</p></div>
-        <div class="container" id="nodeb"><p>Something A-A</p></div>
-        <div class="container" id="nodec"><p>Something A-B</p></div> -->
-        <div href="#" id="nodea" class="node root">Root</div>
+        <div href="#" id="nodea" class="node root">Root A</div>
         <div href="#" id="nodeb" class="node parent1">Parent 1</div>
         <div href="#" id="nodec" class="node parent2">Parent 2</div>
         <div href="#" id="noded" class="node child1">Child 1</div>
@@ -22,9 +19,6 @@
         <div id="add1" class="add add1"><i class="gg-math-plus"></i></div>
         <div id="add2" class="add add2"><i class="gg-math-plus"></i></div>
         <div id="add3" class="add add3"><i class="gg-math-plus"></i></div>
-        <!-- <div class="add-node-button">
-        <button id="addNode">+</button>
-        </div> -->
       </div>
     
     <script type="module">
@@ -36,34 +30,102 @@
       let e = document.getElementById('nodee');
       let add1 = document.getElementById('add1');
       let add2 = document.getElementById('add2');
-      let add3 = document.getElementById('add2');
+      let add3 = document.getElementById('add3');
 
       let leadera = new LeaderLine(a, b,{
-            color: "CornflowerBlue",
+            color: "#17559d",
             size: 2,
         });
       let leaderb = new LeaderLine(a, c,{
-            color: "CornflowerBlue",
+            color: "#17559d",
             size: 2,
         });
       let leaderc = new LeaderLine(c, d,{
-          color: "CornflowerBlue",
+          color: "#17559d",
           size: 2,
       });
 
       let leaderadd1 = new LeaderLine(c, e,{
-          color: "CornflowerBlue",
+          color: "#17559d",
           size: 2,
       });
       let leaderadd2 = new LeaderLine(c, e,{
-          color: "CornflowerBlue",
+          color: "#17559d",
           size: 2,
       });
       let leaderadd3 = new LeaderLine(c, e,{
-          color: "CornflowerBlue",
+          color: "#17559d",
           size: 2,
       });
 
+      let leaderToAddA = new LeaderLine(b, add1, {
+          color: "#17559d",
+          size: 2,
+      });
+
+      let leaderToAddB = new LeaderLine(d, add2, {
+          color: "#17559d",
+          size: 2,
+      });
+
+      let leaderToAddC = new LeaderLine(e, add3, {
+          color: "#17559d",
+          size: 2,
+      });
+
+      let test_tree = {
+        "root": {
+          "parent_A": "child_A",
+          "parent_B": [
+            "child_B1",
+            "child_B2"
+          ]
+        }
+      };
+
+
+      const inArray = function (arr, search) {
+        let found = arr.find((elt) => {
+          elt === search
+        });
+        if (found == null || found == undefined) {
+          return false;
+        }
+        return found.length > 0 ? true : false;
+      }
+
+      const iterate = (obj) => {
+
+        const stack = [obj];
+
+        let uniqueParents = [];
+
+
+        while (stack?.length > 0) {
+
+          const currentObj = stack.pop();
+
+          Object.keys(currentObj).forEach(key => {
+        
+              if (!uniqueParents.includes(key)) {
+                console.log(key);
+                uniqueParents.push(key);
+              }
+              uniqueParents.push(key);
+              //console.log(`key: ${key}, value: ${currentObj[key]}`);
+
+              let isNotNull = currentObj[key] !== null;
+              let objValueType = typeof currentObj[key];
+              let isObject = objValueType === 'object';
+
+              if (isObject && isNotNull) {
+                stack.push(currentObj[key]);
+              }
+            });
+        }
+      };
+      iterate(test_tree);
     </script>
+    <script type="module" src="graphing.ts"></script>
   </body>
 </html>
